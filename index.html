@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RapidShare Archive</title>
+    <style>
+      :root {
+        --bg: #dce5f1;
+        --panel: #f9fbfe;
+        --panel-2: #eef4fb;
+        --border: #9eb5d4;
+        --border-dark: #6a86ab;
+        --accent: #667f81;
+        --accent-dark: #667f81;
+        --gold: #f1d38a;
+        --text: #1a1a1a;
+        --muted: #556b86;
+        --shadow: rgba(15, 45, 79, 0.18);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: Verdana, Arial, Helvetica, sans-serif;
+        color: var(--text);
+        background: #dce8ee;
+      }
+
+      .page {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 0 18px 120px;
+      }
+
+      .top-banner {
+        display: block;
+        width: 100vw;
+        margin-left: calc(50% - 50vw);
+      }
+
+      .top-banner img {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+
+      .layout {
+        display: grid;
+        grid-template-columns: 150px minmax(0, 1fr) 260px;
+        gap: 16px;
+        margin-top: 18px;
+        align-items: start;
+      }
+
+      .panel {
+        border: 1px solid var(--border);
+        background: linear-gradient(180deg, #ffffff, var(--panel));
+        box-shadow: 3px 3px 0 var(--shadow);
+      }
+
+      .left-nav {
+        padding: 12px;
+      }
+
+      .nav-title {
+        margin: 0 0 10px;
+        padding-bottom: 6px;
+        border-bottom: 1px solid #cad7e7;
+        font-size: 0.76rem;
+        font-weight: bold;
+        color: var(--muted);
+        text-align: center;
+        letter-spacing: 0.08em;
+      }
+
+      .nav-link {
+        display: block;
+        margin-bottom: 10px;
+        padding: 10px 8px;
+        border: 1px solid #9ab2d1;
+        background: linear-gradient(180deg, #ffffff, #dce7f7);
+        box-shadow: inset 0 1px 0 #ffffff;
+        text-align: center;
+        text-decoration: none;
+        color: #667f81;
+        font-weight: bold;
+        font-size: 0.84rem;
+      }
+
+      .nav-link:hover,
+      .nav-link:focus {
+        background: linear-gradient(180deg, #ffffff, #c7dbf4);
+      }
+
+      .content {
+        padding: 14px;
+      }
+
+      .section-head {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        align-items: center;
+        padding: 10px 12px;
+        border: 1px solid #bfd0e4;
+        background: linear-gradient(180deg, #fefefe, #ebf2fb);
+      }
+
+      .section-head strong {
+        color: var(--accent-dark);
+      }
+
+      .section-head span {
+        font-size: 0.76rem;
+        color: var(--muted);
+      }
+
+      .archive-list {
+        margin-top: 16px;
+        border: 1px solid #becfe1;
+        background: linear-gradient(180deg, #ffffff, #f7faff);
+      }
+
+      .archive-toolbar {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        align-items: center;
+        padding: 8px 10px;
+        border-bottom: 1px solid #d5e0ef;
+        font-size: 0.76rem;
+        color: var(--muted);
+        background: #edf3fa;
+      }
+
+      .scroll-links {
+        max-height: 430px;
+        overflow-y: auto;
+        padding: 8px 10px 10px;
+      }
+
+      .file-link {
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        align-items: center;
+        padding: 7px 4px;
+        border-bottom: 1px dotted #d1dceb;
+        font-size: 0.82rem;
+      }
+
+      .file-link:last-child {
+        border-bottom: 0;
+      }
+
+      .file-link a {
+        text-decoration: underline;
+        color: #0645ad;
+      }
+
+      .file-link a.visited {
+        color: #7a3fd1;
+      }
+
+      .file-link a.target-link {
+        color: #0645ad;
+        font-weight: normal;
+      }
+
+      .meta {
+        color: #62758d;
+        white-space: nowrap;
+        font-size: 0.75rem;
+      }
+
+      .right-rail {
+        padding: 12px;
+        border: 0;
+        background: transparent;
+        box-shadow: none;
+      }
+
+      .ad-box {
+        border: 1px dashed #abbdd3;
+        background:
+          linear-gradient(135deg, rgba(255, 255, 255, 0.8), rgba(219, 231, 246, 0.85)),
+          repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.25) 0 8px, rgba(180, 199, 224, 0.18) 8px 16px);
+        color: #4f6783;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+      }
+
+      .side-ad {
+        padding: 0;
+        background: transparent;
+        border: 0;
+      }
+
+      .side-ad img {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+
+      .bottom-popup {
+        position: fixed;
+        left: 50%;
+        bottom: 0;
+        transform: translateX(-50%);
+        width: min(860px, calc(100vw - 40px));
+        z-index: 25;
+        background: transparent;
+      }
+
+      .bottom-popup[hidden] {
+        display: none;
+      }
+
+      .popup-inner {
+        position: relative;
+        display: block;
+        padding: 0;
+      }
+
+      .popup-banner {
+        min-height: 40px;
+        background: transparent;
+        overflow: hidden;
+      }
+
+      .popup-banner img {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+
+      .popup-close {
+        position: absolute;
+        top: 6px;
+        right: 6px;
+        width: 24px;
+        height: 24px;
+        padding: 0;
+        border: 1px solid rgba(255, 255, 255, 0.85);
+        background: rgba(0, 0, 0, 0.72);
+        color: #fff;
+        font-weight: bold;
+        cursor: pointer;
+        line-height: 22px;
+        text-align: center;
+      }
+
+      @media (max-width: 980px) {
+        .layout {
+          grid-template-columns: 130px minmax(0, 1fr);
+        }
+
+        .right-rail {
+          grid-column: 1 / -1;
+        }
+      }
+
+      @media (max-width: 760px) {
+        .brand-row,
+        .popup-inner {
+          flex-direction: column;
+          align-items: stretch;
+        }
+
+        .layout {
+          grid-template-columns: 1fr;
+        }
+
+        .file-link {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <header class="top-banner">
+        <img src="assets/rapidshare/banner.png" alt="RapidShare banner" />
+      </header>
+
+      <main class="layout">
+        <aside class="panel left-nav">
+          <div class="nav-title">Navigation</div>
+          <a class="nav-link" href="#">USER</a>
+          <a class="nav-link" href="#">HOME</a>
+          <a class="nav-link" href="#">CHAT</a>
+          <a class="nav-link" href="#">UPLOAD</a>
+          <a class="nav-link" href="#">SHARE</a>
+        </aside>
+
+        <section class="panel content">
+          <div class="section-head">
+            <strong>Public Download Archive</strong>
+            <span>Sorted by recent activity and mirror status</span>
+          </div>
+
+          <div class="archive-list">
+            <div class="archive-toolbar">
+              <span>Index results: 152 files</span>
+              <span>Page 1 of 12</span>
+            </div>
+
+            <div class="scroll-links">
+              <div class="file-link"><a href="#" class="visited">giant_attack.rar</a><span class="meta">48.2 MB | mirror 1</span></div>
+              <div class="file-link"><a href="#">nightfeed_capture_v2.zip</a><span class="meta">89.7 MB | mirror 2</span></div>
+              <div class="file-link"><a href="#" class="visited">basement_video.mov</a><span class="meta">211.5 MB | mirror 1</span></div>
+              <div class="file-link"><a href="#" class="visited">ashtray_scanpack_17.iso</a><span class="meta">601.2 MB | mirror 3</span></div>
+              <div class="file-link"><a href="#">security_stolen.rar</a><span class="meta">14.8 MB | mirror 1</span></div>
+              <div class="file-link"><a href="#">motorcycle_accident.zip</a><span class="meta">178.0 MB | mirror 2</span></div>
+              <div class="file-link"><a href="#">sleepwalk_audio.wav</a><span class="meta">56.4 MB | mirror 1</span></div>
+              <div class="file-link"><a href="#" class="visited">teethmarks_reference_sheet.pdf</a><span class="meta">8.1 MB | mirror 3</span></div>
+              <div class="file-link"><a href="#">cloning_mockup.ai</a><span class="meta">22.6 MB | mirror 2</span></div>
+              <div class="file-link"><a href="#" class="visited">serial_killer_footage_04.txt</a><span class="meta">1.2 MB | mirror 1</span></div>
+              <div class="file-link"><a href="#">old_forum_backup.sql</a><span class="meta">73.3 MB | mirror 2</span></div>
+              <div class="file-link"><a href="#">caught_on_camera.tar</a><span class="meta">302.9 MB | mirror 1</span></div>
+              <div class="file-link"><a href="#">masked_killer.zip</a><span class="meta">12.3 MB | mirror 2</span></div>
+              <div class="file-link"><a href="rapidshare-video.html" id="working-link" class="target-link">behead_1111111.mp4</a><span class="meta">220.3 MB | mirror 1</span></div>
+              <div class="file-link"><a href="#">corrider_body.psd</a><span class="meta">84.7 MB | mirror 3</span></div>
+              <div class="file-link"><a href="#">archive_clip.avi</a><span class="meta">190.2 MB | mirror 1</span></div>
+              <div class="file-link"><a href="#">stairwell_accident.7z</a><span class="meta">410.5 MB | mirror 2</span></div>
+              <div class="file-link"><a href="#" class="visited">naked_video.rar</a><span class="meta">44.6 MB | mirror 3</span></div>
+              <div class="file-link"><a href="#">terrorist_attack.mov</a><span class="meta">239.9 MB | mirror 1</span></div>
+              <div class="file-link"><a href="#" class="visited">bombing.zip</a><span class="meta">9.6 MB | mirror 2</span></div>
+              <div class="file-link"><a href="#">forum_attachment_dump_01.rar</a><span class="meta">66.7 MB | mirror 1</span></div>
+              <div class="file-link"><a href="#">weird_person.psd</a><span class="meta">31.8 MB | mirror 3</span></div>
+              <div class="file-link"><a href="#" class="visited">street_audio_rec_12.mp3</a><span class="meta">7.4 MB | mirror 2</span></div>
+              <div class="file-link"><a href="#">final_render_temp_b.mov</a><span class="meta">352.8 MB | mirror 1</span></div>
+              <div class="file-link"><a href="#">killed_folder.zip</a><span class="meta">61.2 MB | mirror 3</span></div>
+              <div class="file-link"><a href="#" class="visited">drainpipe_sequence_09.avi</a><span class="meta">95.5 MB | mirror 2</span></div>
+              <div class="file-link"><a href="#">hotelhall_camera_b.mp4</a><span class="meta">182.4 MB | mirror 1</span></div>
+              <div class="file-link"><a href="#">dead_contact_sheet.rar</a><span class="meta">28.7 MB | mirror 3</span></div>
+              <div class="file-link"><a href="#" class="visited">midnight_monitor.iso</a><span class="meta">512.0 MB | mirror 2</span></div>
+              <div class="file-link"><a href="#">untitled_clip_final_final.mov</a><span class="meta">274.6 MB | mirror 1</span></div>
+              <div class="file-link"><a href="#">funny_deaths.zip</a><span class="meta">40.1 MB | mirror 2</span></div>
+              <div class="file-link"><a href="#" class="visited">stillwarm_reference_03.pdf</a><span class="meta">12.0 MB | mirror 1</span></div>
+              <div class="file-link"><a href="#">underpass_loop_capture.avi</a><span class="meta">163.3 MB | mirror 3</span></div>
+              <div class="file-link"><a href="#">nsfw.wav</a><span class="meta">71.2 MB | mirror 2</span></div>
+              <div class="file-link"><a href="#">windowlicker_scan_08.rar</a><span class="meta">36.4 MB | mirror 1</span></div>
+              <div class="file-link"><a href="#" class="visited">crawlspace_photoset_x.zip</a><span class="meta">54.9 MB | mirror 3</span></div>
+              <div class="file-link"><a href="#">baby_render_test.mov</a><span class="meta">208.7 MB | mirror 2</span></div>
+              <div class="file-link"><a href="#">leaked_footage.txt</a><span class="meta">2.2 MB | mirror 1</span></div>
+              <div class="file-link"><a href="#" class="visited">redhallway_clipcache.tar</a><span class="meta">318.8 MB | mirror 2</span></div>
+              <div class="file-link"><a href="#">nude.avi</a><span class="meta">146.0 MB | mirror 3</span></div>
+              <div class="file-link"><a href="#">face_shots.zip</a><span class="meta">23.5 MB | mirror 1</span></div>
+              <div class="file-link"><a href="#" class="visited">uncensored_tape_02.mov</a><span class="meta">187.1 MB | mirror 2</span></div>
+              <div class="file-link"><a href="#">slaughter.rar</a><span class="meta">33.0 MB | mirror 3</span></div>
+              <div class="file-link"><a href="#">not_alive.iso</a><span class="meta">690.4 MB | mirror 1</span></div>
+              <div class="file-link"><a href="#" class="visited">staringcontest_webcam.mp4</a><span class="meta">81.7 MB | mirror 2</span></div>
+            </div>
+          </div>
+        </section>
+
+        <aside class="right-rail">
+          <div class="side-ad">
+            <img src="assets/rapidshare/zortchad.png" alt="Side advertisement" />
+          </div>
+        </aside>
+      </main>
+    </div>
+
+    <div class="bottom-popup" id="bottom-popup">
+      <div class="popup-inner">
+        <div class="popup-banner">
+          <img src="assets/rapidshare/cd.gif" alt="Bottom advertisement" />
+        </div>
+        <button class="popup-close" type="button" id="close-popup">X</button>
+      </div>
+    </div>
+
+    <script>
+      const archiveLinks = document.querySelectorAll(".scroll-links a");
+      const closePopup = document.getElementById("close-popup");
+      const bottomPopup = document.getElementById("bottom-popup");
+
+      archiveLinks.forEach((link) => {
+        if (link.getAttribute("id") !== "working-link") {
+          link.addEventListener("click", (event) => {
+            event.preventDefault();
+          });
+        }
+      });
+
+      closePopup.addEventListener("click", () => {
+        bottomPopup.hidden = true;
+      });
+    </script>
+  </body>
+</html>

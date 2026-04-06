@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RapidShare Archive</title>
+    <style>
+      :root {
+        --bg: #dce6f2;
+        --panel: #fbfdff;
+        --border: #9db5d3;
+        --accent: #667f81;
+        --accent-dark: #667f81;
+        --text: #1d2430;
+        --muted: #61728a;
+        --shadow: rgba(15, 45, 79, 0.18);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: Verdana, Arial, Helvetica, sans-serif;
+        color: var(--text);
+        background: #dce8ee;
+      }
+
+      .page {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 0 18px 80px;
+        position: relative;
+      }
+
+      .banner {
+        display: block;
+        width: 100vw;
+        margin-left: calc(50% - 50vw);
+      }
+
+      .banner img {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+
+      .content {
+        margin-top: 18px;
+        width: min(1020px, calc(100vw - 40px));
+        margin-left: auto;
+        margin-right: auto;
+        border: 1px solid var(--border);
+        background: linear-gradient(180deg, #ffffff, var(--panel));
+        box-shadow: 3px 3px 0 var(--shadow);
+        padding: 16px;
+      }
+
+      .path {
+        font-size: 0.75rem;
+        color: var(--muted);
+        border-bottom: 1px dotted #c8d5e5;
+        padding-bottom: 8px;
+      }
+
+      .hero {
+        margin-top: 14px;
+        padding: 14px;
+        border: 1px solid #bfd0e4;
+        background: linear-gradient(180deg, #fcfdff, #edf3fb);
+      }
+
+      .hero h2 {
+        margin: 0 0 8px;
+        color: var(--accent-dark);
+        font-size: 1.2rem;
+      }
+
+      .hero p {
+        margin: 0;
+        line-height: 1.5;
+        font-size: 0.88rem;
+      }
+
+      .wide-ad {
+        margin-top: 14px;
+        background: transparent;
+        padding: 0;
+      }
+
+      .wide-ad img {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+
+      .video-shell {
+        margin-top: 16px;
+        border: 1px solid #c7d5e5;
+        background: #fbfdff;
+        padding: 12px;
+      }
+
+      video {
+        width: 100%;
+        display: block;
+        background: #000;
+      }
+
+      .floating-ad {
+        position: fixed;
+        right: 28px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: min(220px, calc(100vw - 24px));
+        z-index: 25;
+      }
+
+      .floating-ad[hidden] {
+        display: none;
+      }
+
+      .side-ad {
+        position: relative;
+        border: 1px solid #c7d5e5;
+        background: #fbfdff;
+        padding: 10px;
+        box-shadow: 3px 3px 0 var(--shadow);
+      }
+
+      .side-ad img {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+
+      .close-ad {
+        position: absolute;
+        top: 6px;
+        right: 6px;
+        width: 22px;
+        height: 22px;
+        padding: 0;
+        border: 1px solid rgba(255, 255, 255, 0.85);
+        background: rgba(0, 0, 0, 0.72);
+        color: #fff;
+        font-weight: bold;
+        line-height: 20px;
+        text-align: center;
+        cursor: pointer;
+      }
+
+      .back-link {
+        position: absolute;
+        left: -35px;
+        top: 240px;
+        padding: 10px 12px;
+        border: 1px solid #98b3d4;
+        background: linear-gradient(180deg, #ffffff, #dce8f7);
+        color: #667f81;
+        font-weight: bold;
+        text-decoration: none;
+      }
+
+      .back-link::before {
+        content: "<";
+        margin-right: 8px;
+      }
+
+      @media (max-width: 760px) {
+        .content {
+          width: 100%;
+        }
+
+        .back-link {
+          position: static;
+          display: inline-block;
+          margin: 14px 0 0;
+        }
+
+        .floating-ad {
+          position: static;
+          transform: none;
+          width: 100%;
+          margin-top: 14px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <header class="banner">
+        <img src="assets/rapidshare/banner.png" alt="RapidShare banner" />
+      </header>
+
+      <a class="back-link" href="index.html">RETURN</a>
+
+      <main class="content">
+        <div class="path">Home / Public Shares / behead_1111111.mp4 / preview</div>
+
+        <div class="wide-ad">
+          <img src="assets/rapidshare/rectangle.png" alt="Wide advertisement" />
+        </div>
+
+        <div class="video-shell">
+          <video controls autoplay playsinline>
+            <source src="assets/rapidshare/BEHEAD_1111111.mp4" type="video/mp4" />
+          </video>
+        </div>
+
+      </main>
+
+      <aside class="floating-ad" id="floating-ad">
+        <div class="side-ad">
+          <button class="close-ad" type="button" id="close-ad">X</button>
+          <img src="assets/rapidshare/smallrec.gif" alt="Side advertisement" />
+        </div>
+      </aside>
+    </div>
+    <script>
+      const closeAd = document.getElementById("close-ad");
+      const floatingAd = document.getElementById("floating-ad");
+
+      closeAd.addEventListener("click", () => {
+        floatingAd.hidden = true;
+      });
+    </script>
+  </body>
+</html>
