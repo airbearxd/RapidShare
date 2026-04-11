@@ -2,10 +2,12 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=800, initial-scale=1.0" />
     <title>RapidShare Archive</title>
     <style>
       :root {
+        --desktop-width: 800px;
+        --side-ad-width: 180px;
         --bg: #dce6f2;
         --panel: #fbfdff;
         --border: #9db5d3;
@@ -23,22 +25,24 @@
       body {
         margin: 0;
         min-height: 100vh;
+        min-width: var(--desktop-width);
         font-family: Verdana, Arial, Helvetica, sans-serif;
         color: var(--text);
         background: #dce8ee;
       }
 
       .page {
-        max-width: 1280px;
+        width: var(--desktop-width);
+        max-width: var(--desktop-width);
         margin: 0 auto;
-        padding: 0 18px 80px;
+        padding: 0 14px 60px;
         position: relative;
       }
 
       .banner {
         display: block;
-        width: 100vw;
-        margin-left: calc(50% - 50vw);
+        width: 100%;
+        margin-left: 0;
       }
 
       .banner img {
@@ -49,8 +53,8 @@
 
       .content {
         margin-top: 18px;
-        width: min(1020px, calc(100vw - 40px));
-        margin-left: auto;
+        width: calc(100% - var(--side-ad-width) - 26px);
+        margin-left: 26px;
         margin-right: auto;
         border: 1px solid var(--border);
         background: linear-gradient(180deg, #ffffff, var(--panel));
@@ -110,11 +114,11 @@
       }
 
       .floating-ad {
-        position: fixed;
-        right: 28px;
-        top: 50%;
-        transform: translateY(-50%);
-        width: min(220px, calc(100vw - 24px));
+        position: absolute;
+        right: 14px;
+        top: 178px;
+        transform: none;
+        width: var(--side-ad-width);
         z-index: 25;
       }
 
@@ -154,14 +158,15 @@
 
       .back-link {
         position: absolute;
-        left: -35px;
-        top: 240px;
-        padding: 10px 12px;
+        left: 0;
+        top: 220px;
+        padding: 9px 10px;
         border: 1px solid #98b3d4;
         background: linear-gradient(180deg, #ffffff, #dce8f7);
         color: #667f81;
         font-weight: bold;
         text-decoration: none;
+        font-size: 0.82rem;
       }
 
       .back-link::before {
@@ -169,9 +174,10 @@
         margin-right: 8px;
       }
 
-      @media (max-width: 760px) {
+      @media (max-width: 420px) {
         .content {
           width: 100%;
+          margin-left: 0;
         }
 
         .back-link {
